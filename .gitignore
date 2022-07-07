@@ -1,0 +1,12 @@
+# exclude following files
+.bak
+.bak-mo
+.exe
+.exp
+.la
+.lo
+.m4
+.o
+.deps
+.dirstamp
+.libs
