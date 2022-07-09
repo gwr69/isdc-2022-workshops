@@ -1,6 +1,6 @@
 package ISDC2022_Workshops "Support material for workshops #231 and #232 at the International System Dynamics Conference 2022 in Frankfurt, Germany"
   extends BusinessSimulation.Icons.Package;
-  annotation(Documentation(info = "<html>
+  annotation(version = "1.0.0", versionDate = "2022-07-22", revisionId = "", uses(Modelica(version = "3.2.3"), BusinessSimulation(version = "2.0.0")), Documentation(info = "<html>
 <p class=\"aside\">This information is part of the ISDC 2022 Workshops package.</p>
 <p>This package contains material for workshops #231 and #232 at the 40th International System Dynamics Conference (ISDC 2022) in Frankfurt, Germany.</p>
 <br>
