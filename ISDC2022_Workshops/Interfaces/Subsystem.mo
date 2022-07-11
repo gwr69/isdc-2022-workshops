@@ -1,6 +1,7 @@
 within ISDC2022_Workshops.Interfaces;
 
 partial model Subsystem "Partial subsystem model"
+  import BusinessSimulation.ModelSettings;
   extends BusinessSimulation.Icons.SubsystemTransceiver;
   IO io "Information exchange" annotation(Placement(visible = true, transformation(origin = {-0, 105}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {0, 100}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.CausalLoop.InfoFlowIndicator lab annotation(Placement(visible = true, transformation(origin = {10, 97.53}, extent = {{-10, -10}, {10, 10}}, rotation = -270)));

@@ -1,6 +1,6 @@
 within ISDC2022_Workshops.Examples;
 
-model TeaCupComponentBased4 "Component-based version of the tea cup model (conductive heat transfer)"
+model TeaCupPhysical1 "Physical version of the tea cup model (conductive heat transfer only)"
   import Modelica.SIunits.{Mass,SpecificHeatCapacity,Length,ThermalConductivity,ThermalConductance};
   import Modelica.Constants.pi;
   extends BusinessSimulation.Icons.Example;
@@ -17,7 +17,7 @@ model TeaCupComponentBased4 "Component-based version of the tea cup model (condu
   Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor tempCup "Temperature of tea in the cup" annotation(Placement(visible = true, transformation(origin = {27.866, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Modelica.Thermal.HeatTransfer.Components.ThermalConductor conduction(G = G_cup) "Conductive heatflow according to the surface, thickness, and conductivity of the cup" annotation(Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 protected
-  parameter ThermalConductance G_cup = 2 * pi * k * h / log(d / (d - t)) "Thermal conductance of cup" annotation(Dialog(group = "Specification of cup", enable = false));
+  parameter ThermalConductance G_cup = 2 * pi * k * h / log(d / (d - 2 * t)) "Thermal conductance of cup" annotation(Dialog(group = "Specification of cup", enable = false));
 equation
   connect(teaCup.port, tempCup.port) annotation(Line(visible = true, origin = {-24.583, 14.386}, points = {{-15.417, -4.386}, {-15.417, -14.386}, {24.583, -14.386}, {24.583, 15.614}, {42.449, 15.614}}, color = {191, 0, 0}));
   connect(teaCup.port, conduction.port_a) annotation(Line(visible = true, origin = {-30, -16.667}, points = {{-10, 26.667}, {-10, -13.333}, {20, -13.333}}, color = {191, 0, 0}));
@@ -32,5 +32,5 @@ In this component-based version of the <code>TeaCup</code> model we are using co
 <a href=\"modelica://ISDC2022_Workshops.Examples.TeaCupTextual\">TeaCupTextual</a>,
 <a href=\"modelica://ISDC2022_Workshops.Examples.TeaCupComponentBased5\">TeaCupComponentBased5</a>
 </p>
-</html>"), Diagram(coordinateSystem(extent = {{-148.5, -105}, {148.5, 105}}, preserveAspectRatio = true, initialScale = 0.1, grid = {5, 5}), graphics = {Text(visible = true, origin = {0, 65}, textColor = {76, 112, 136}, extent = {{-140, -6}, {140, 6}}, textString = "... using physical components (MSL)", fontName = "Lato Black", textStyle = {TextStyle.Bold})}));
-end TeaCupComponentBased4;
+</html>"), Diagram(coordinateSystem(extent = {{-148.5, -105}, {148.5, 105}}, preserveAspectRatio = true, initialScale = 0.1, grid = {5, 5})));
+end TeaCupPhysical1;
