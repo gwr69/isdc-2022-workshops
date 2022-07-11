@@ -6,7 +6,7 @@ model TeaCupPhysical2 "More elaborate physical version of the tea cup model"
   extends BusinessSimulation.Icons.Example;
   // parameters
   parameter Boolean hasInsideConvection = false "= true, if convective heat flow is to be assumed for the liquid in the cup" annotation(Evaluate = true, Dialog(group = "Structural Parameters"));
-  parameter Boolean hasTopConvection = false "= true, if convective heat flow is to be assumed for the liquid at the top" annotation(Evaluate = true, Dialog(group = "Structural Parameters"));
+  parameter Boolean hasTopConvection = true "= true, if convective heat flow is to be assumed for the liquid at the top" annotation(Evaluate = true, Dialog(group = "Structural Parameters"));
   parameter Boolean hasBodyRadiation = true "= true, if body radiation is to be accounted for" annotation(Evaluate = true, Dialog(group = "Structural Parameters"));
   parameter Mass m(displayUnit = "g") = 0.25 "Mass of tea in the cup" annotation(Dialog(group = "Specification for hot liquid in the cup"));
   parameter SpecificHeatCapacity c_p = 4181 "Specific heat capacity for liquid water/tea" annotation(Dialog(group = "Specification for hot liquid in the cup"));
