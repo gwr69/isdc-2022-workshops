@@ -1,6 +1,6 @@
-within ISDC2022_Workshops.Examples;
+within ISDC2022_Workshops.Examples.PeopleExpress;
 
-model LookupFunctions "Showcase of lookup-functions"
+model LookupFunctions "Sandbox for lookup-functions"
   extends BusinessSimulation.Icons.Example;
   ModelOutput modelOutput "The main model output" annotation(Placement(visible = true, transformation(origin = {120, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {80.808, -6.712}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   parameter Real slope1To50(min = 1, max = 50) = 2 "Slope parameter (general)";
@@ -8,10 +8,10 @@ model LookupFunctions "Showcase of lookup-functions"
   parameter Real slopeUpTo1(min = 0, max = 1) = 0.5 "Slope parameter (0< slope <= 1) (concaveLookupPosisitve)";
   parameter Real interceptUpward(min = 0, max = 1) = 0. "Value of y when input is zero or less (y0) for upward sloping functions";
   parameter Real interceptDownward(min = 1) = 2. "Value of y when input is zero or less (y0) for downward sloping functions";
-  parameter Real upperBound = 2 "Upper asymptote for u <= 0 (upperBound > lowerBound) (Janoschek and S-Shaped)";
+  parameter Real upperBound = 1 "Upper asymptote for u <= 0 (upperBound > lowerBound) (Janoschek and S-Shaped)";
   parameter Real lowerBound = 0 "Lower asymptote for u -> infinity (Janoschek)";
-  parameter Real x_ref(min = 0) = 1 "x-value for point of inflection(>0) (Janoschek)";
-  parameter Real y_ref = 1 "y-value for point of inflection(lowerBound < y_ref < upperBound) (Janoschek)";
+  parameter Real x_ref(min = 0) = 0.5 "x-value for point of inflection(>0) (Janoschek)";
+  parameter Real y_ref = 0.5 "y-value for point of inflection(lowerBound < y_ref < upperBound) (Janoschek)";
   parameter Real table[:, :] = {{0, 0}, {2, 4}, {4, 6}, {6, 8}} "Table matrix (grid = first column; e.g., table=[0,2]) (combiTable1D.table) (tableFunction.table)";
   parameter Modelica.Blocks.Types.Smoothness smoothness = Modelica.Blocks.Types.Smoothness.LinearSegments "Smoothness of table interpolation (tableFunction.smoothness)";
   parameter Modelica.Blocks.Types.Extrapolation extrapolation = Modelica.Blocks.Types.Extrapolation.HoldLastPoint "Extrapolation of data outside the definition range (combiTable.extrapolation) (tableFunction.extrapolation)";
