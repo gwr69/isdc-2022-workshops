@@ -3,15 +3,17 @@ within ISDC2022_Workshops.Components;
 model Staff "People express staff"
   extends Interfaces.Staff;
   // parameters
-  parameter BusinessSimulation.Units.AmountRate SP(displayUnit = "million/yr") = 0.0475646879756469 "Service productivity, i.e., revenuer passenger miles per service staff and year";
+  parameter Real initNS = 0 "Initial number of new staff";
+  parameter Real initES = 200 "Initial number of experienced staff";
+  parameter BusinessSimulation.Units.AmountRate SP(displayUnit = "million/yr") = 0.0475646879756469 "Service productivity, i.e., revenue passenger miles per service staff and year";
   parameter Real MCM(unit = "people") = 60 "Maximum capapcity multiplier, i.e., max staff per plane (hiringPolicy.MCM)";
   parameter BusinessSimulation.Units.Rate RI(displayUnit = "1/yr") = 9.51293759512938e-07 "Recruiting intensity, i.e., job interviews per recruiter per year (hiringPolicy.RI)";
   parameter BusinessSimulation.Units.Amount AR(displayUnit = "percent") = 0.03 "Fraction of applicants accepted (hiringPolicy.AR)";
-  parameter Real FHT = 0.1 "Fraction of experienced staff fully envolved in hiring";
-  parameter Real TRI = 0.03 "Experienced staff fully envolved in training per recruit";
+  parameter Real FHI = 0.1 "Fraction of experienced staff fully envolved in hiring";
+  parameter Real EPR = 0.03 "Experienced staff fully envolved in training per recruit";
 protected
-  BusinessSimulation.Stocks.MaterialStock experiencedStaff(initialValue = 250) "Experienced personnel" annotation(Placement(visible = true, transformation(origin = {40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  BusinessSimulation.Stocks.DelayN newStaff(hasConstantDelayTime = false) "Freshly recruited personnel" annotation(Placement(visible = true, transformation(origin = {-40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  BusinessSimulation.Stocks.MaterialStock experiencedStaff(initialValue = initES) "Experienced personnel" annotation(Placement(visible = true, transformation(origin = {40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  BusinessSimulation.Stocks.DelayN newStaff(hasConstantDelayTime = false, initialValue = initNS) "Freshly recruited personnel" annotation(Placement(visible = true, transformation(origin = {-40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.Flows.Unidirectional.OutflowDynamicStock advancing "New staff becoming experienced" annotation(Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.SourcesOrSinks.ExponentialDecline leaving "Personnel leaving the company" annotation(Placement(visible = true, transformation(origin = {80, 0}, extent = {{10, 10}, {-10, -10}}, rotation = 0)));
   BusinessSimulation.SourcesOrSinks.Growth hiring "Recruiting new personnel" annotation(Placement(visible = true, transformation(origin = {-80, 0}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
@@ -19,8 +21,8 @@ protected
   BusinessSimulation.Converters.ConstantConverterRate turnover(timeBaseString = "year", value(displayUnit = "percent") = 0, redeclare replaceable type ValueType = BusinessSimulation.Units.Amount) "Fractional rate of staff leaving, which is not an option in \"the firm\" ;-)" annotation(Placement(visible = true, transformation(origin = {110, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   HiringPolicy hiringPolicy(redeclare replaceable type OutputType = BusinessSimulation.Units.Rate, MCM = MCM, RI = RI, AR = AR) "Setting the rate of hiring" annotation(Placement(visible = true, transformation(origin = {-60, -40}, extent = {{10, 10}, {-10, -10}}, rotation = 0)));
   BusinessSimulation.Converters.Vector.Total totalStaff "Sum of new and experienced staff" annotation(Placement(visible = true, transformation(origin = {-26.713, -25}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  BusinessSimulation.Converters.Gain recruiters(c = FHT) "Experienced staff available for hiring" annotation(Placement(visible = true, transformation(origin = {30, -40}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  BusinessSimulation.Converters.Gain hiddenCoaching(c = TRI) "Experienced staff involved in coaching" annotation(Placement(visible = true, transformation(origin = {-7.231, 28.217}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  BusinessSimulation.Converters.Gain recruiters(c = FHI) "Experienced staff available for hiring" annotation(Placement(visible = true, transformation(origin = {30, -40}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  BusinessSimulation.Converters.Gain hiddenCoaching(c = EPR) "Experienced staff involved in coaching" annotation(Placement(visible = true, transformation(origin = {-7.231, 28.217}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.Vector.Total unavailableStaff "Experienced staff envolved in hiring and training" annotation(Placement(visible = true, transformation(origin = {40, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.Gap effectiveServiceStaff "Experienced staff effictively serving passengers" annotation(Placement(visible = true, transformation(origin = {80, 30}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   BusinessSimulation.Converters.ConstantConverter serviceProductivity(value = SP) "Revenue passenger miles per service staff per year" annotation(Placement(visible = true, transformation(origin = {110, 90}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));

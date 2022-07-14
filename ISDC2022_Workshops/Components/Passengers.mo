@@ -2,6 +2,7 @@ within ISDC2022_Workshops.Components;
 
 model Passengers "Passenger and market subsystem"
   extends Interfaces.Passengers;
+  parameter BusinessSimulation.Units.Amount initPP(displayUnit = "thousand") = 180e3 "Initial number of potential passengers";
   parameter BusinessSimulation.Units.Time TTP(displayUnit = "yr") = 31536000 "Time to perceive service quality";
   parameter BusinessSimulation.Units.Time ATP(displayUnit = "yr") = 126144000 "Time to adjust costs and fare to peoples";
   parameter Real ICF(unit = "USD/RPM") = 0.25 "Initial fare for competition";
@@ -10,9 +11,9 @@ model Passengers "Passenger and market subsystem"
   parameter BusinessSimulation.Units.Time PPST(displayUnit = "yr") = 62472816000 "Start time for ramping up or down fares";
   parameter BusinessSimulation.Units.Time PPD(displayUnit = "yr") = 0 "Duration of price adaptation";
   parameter Real MPF(unit = "miles") = 800 "Average distance travelled per passenger and flight";
-  parameter Real FPY(unit = "1/yr") = 4 "Average number of flights per passenger and year";
-protected
-  BusinessSimulation.Stocks.MaterialStock potentialPassengers(redeclare replaceable type OutputType = BusinessSimulation.Units.Amount, initialValue(displayUnit = "thousand") = 180000) "Maximum number of passengers for PEX flights" annotation(Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  parameter BusinessSimulation.Units.Rate FPY(displayUnit = "1/yr") = 1.26839167935058e-07 "Average number of flights per passenger and year";
+  //protected
+  BusinessSimulation.Stocks.MaterialStock potentialPassengers(redeclare replaceable type OutputType = BusinessSimulation.Units.Amount, initialValue(displayUnit = "thousand") = initPP) "Maximum number of passengers for PEX flights" annotation(Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.SourcesOrSinks.ExponentialChange winning "Increase of potential passengers" annotation(Placement(visible = true, transformation(origin = {-60, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.SourcesOrSinks.ExponentialDecline losing "Losing potential passengers" annotation(Placement(visible = true, transformation(origin = {60, 0}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.DiscreteDelay.Smooth serviceReputation(hasConstantDelayTime = false) "Service quality perceived by passengers" annotation(Placement(visible = true, transformation(origin = {20, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -28,7 +29,7 @@ protected
   BusinessSimulation.Converters.Product_3 potentialPassengerMiles(redeclare replaceable type OutputType = BusinessSimulation.Units.Rate) "Potential demand size per year" annotation(Placement(visible = true, transformation(origin = {40, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   // illustration
   BusinessSimulation.CausalLoop.InfoFlowIndicator lab2 annotation(Placement(visible = true, transformation(origin = {-35, 52.192}, extent = {{-10, -10}, {10, 10}}, rotation = -360)));
-  BusinessSimulation.CausalLoop.InfoFlowIndicator lab3 annotation(Placement(visible = true, transformation(origin = {-1.722, 42.57}, extent = {{-10, -10}, {10, 10}}, rotation = -270)));
+  BusinessSimulation.CausalLoop.InfoFlowIndicator lab3 annotation(Placement(visible = true, transformation(origin = {2.318, 36.51}, extent = {{-10, -10}, {10, 10}}, rotation = -270)));
 equation
   connect(winning.massPort, potentialPassengers.inflow) annotation(Line(visible = true, origin = {-30, 0}, points = {{-20, 0}, {20, 0}}, color = {128, 0, 128}));
   connect(potentialPassengers.outflow, losing.massPort) annotation(Line(visible = true, origin = {30, 0}, points = {{-20, 0}, {20, 0}}, color = {128, 0, 128}));
@@ -47,6 +48,7 @@ equation
   connect(avgDistanceTraveled.y, potentialPassengerMiles.u2) annotation(Line(visible = true, origin = {-12.131, -50}, points = {{-21.869, 10}, {0.199, 10}, {0.199, -10}, {44.131, -10}}, color = {1, 37, 163}, smooth = Smooth.Bezier));
   connect(potentialPassengers.y1, potentialPassengerMiles.u1) annotation(Line(visible = true, origin = {19.004, -30}, points = {{-8.504, 25}, {0.996, 25}, {0.996, -25}, {12.996, -25}}, color = {1, 37, 163}, smooth = Smooth.Bezier));
   connect(potentialPassengerMiles.y, io.potentialPassengerMiles) "output potential passenger miles" annotation(Line(visible = true, origin = {49.6, 5}, points = {{-1.6, -65}, {50.4, -65}, {50.4, 15}, {-49.6, 15}, {-49.6, 100}}, color = {1, 37, 163}, smooth = Smooth.Bezier));
+  connect(potentialPassengers.y2, io.potentialPassengers) "output potential passengers" annotation(Line(visible = true, origin = {-10.1, 27.31}, points = {{-0.4, -32.31}, {-9.9, -32.31}, {-9.9, -9.128}, {10.1, -9.128}, {10.1, 77.69}}, color = {1, 37, 163}, smooth = Smooth.Bezier));
   annotation(Documentation(info = "<html>
 <p class=\"aside\">This information is part of the ISDC2022 Workshops package.</p>
 <p>
@@ -55,5 +57,5 @@ Following John Morecroft's interpretation [<a href=\"modelica://ISDC2022_Worksho
 <p>
 PEX can be seen as a price setter, that is followed by the rest of the industry. Accordingly the fare of competitors' can be modeled as a <em>smooth</em> of Peoples' fare. Relative fare can then be used as an input to a—negatively sloped—s-shaped look-up function (<a href=\"modelica://BusinessSimulation.Converters.Lookup.JanoschekNegative\">→<code>JanoschekNegative</code></a>) to arrive at a fractional rate of winning new passengers (<code>conversionRate</code>). Conversely, existing passengers perceive <code>serviceQuality</code>—again modeled by a smooth—and will decide to abandon PEX. This decision is also modeled using a negatively sloping s-shaped look-up function (<code>churnRate</code>).
 </p>
-</html>"), Diagram(coordinateSystem(extent = {{-148.5, -105}, {148.5, 105}}, preserveAspectRatio = true, initialScale = 0.1, grid = {5, 5}), graphics = {Text(visible = true, origin = {55, 98.848}, textColor = {0, 0, 128}, extent = {{-34.511, -3.848}, {34.511, 3.848}}, textString = "relativeFare", fontSize = 12, fontName = "Lato", horizontalAlignment = TextAlignment.Left), Text(visible = true, origin = {55, 93.848}, textColor = {0, 0, 128}, extent = {{-34.511, -3.848}, {34.511, 3.848}}, textString = "potentialPassengerMiles", fontSize = 12, fontName = "Lato", horizontalAlignment = TextAlignment.Left), Text(visible = true, origin = {-54.511, 98.848}, textColor = {0, 0, 128}, extent = {{-34.511, -3.848}, {34.511, 3.848}}, textString = "serviceQuality", fontSize = 12, fontName = "Lato", horizontalAlignment = TextAlignment.Right)}));
+</html>"), Diagram(coordinateSystem(extent = {{-148.5, -105}, {148.5, 105}}, preserveAspectRatio = true, initialScale = 0.1, grid = {5, 5}), graphics = {Text(visible = true, origin = {55, 98.848}, textColor = {0, 0, 128}, extent = {{-34.511, -3.848}, {34.511, 3.848}}, textString = "relativeFare", fontSize = 12, fontName = "Lato", horizontalAlignment = TextAlignment.Left), Text(visible = true, origin = {55, 93.848}, textColor = {0, 0, 128}, extent = {{-34.511, -3.848}, {34.511, 3.848}}, textString = "potentialPassengerMiles", fontSize = 12, fontName = "Lato", horizontalAlignment = TextAlignment.Left), Text(visible = true, origin = {-54.511, 98.848}, textColor = {0, 0, 128}, extent = {{-34.511, -3.848}, {34.511, 3.848}}, textString = "serviceQuality", fontSize = 12, fontName = "Lato", horizontalAlignment = TextAlignment.Right), Text(visible = true, origin = {107.507, 100}, textColor = {0, 0, 128}, extent = {{-34.511, -3.848}, {34.511, 3.848}}, textString = "potentialPassengers", fontSize = 12, fontName = "Lato", horizontalAlignment = TextAlignment.Left)}));
 end Passengers;

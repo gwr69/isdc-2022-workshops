@@ -3,8 +3,9 @@ within ISDC2022_Workshops.Components;
 model Fleet "People express fleet"
   extends ISDC2022_Workshops.Interfaces.Fleet;
   parameter BusinessSimulation.Units.Rate growthTarget(displayUnit = "1/yr") = 3.17097919837646e-09 "Growth rate envisoned by Don Burr";
+  parameter BusinessSimulation.Units.TangibleAssets initAC = 3 "Initial number of aircraft";
 protected
-  BusinessSimulation.Stocks.MaterialStock aircraft(initialValue = 3) "Aircraft of norm size in the fleet" annotation(Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  BusinessSimulation.Stocks.MaterialStock aircraft(initialValue = initAC) "Aircraft of norm size in the fleet" annotation(Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.SourcesOrSinks.ExponentialChange growing annotation(Placement(visible = true, transformation(origin = {-40, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.ConstantConverter targetGrowth(redeclare replaceable type OutputType = BusinessSimulation.Units.Rate, value = growthTarget) "Envisioned growth" annotation(Placement(visible = true, transformation(origin = {-120, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.Product_3 availableSeatMiles(redeclare replaceable type OutputType = BusinessSimulation.Units.AmountRate) "Available seat miles" annotation(Placement(visible = true, transformation(origin = {75, 20}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
