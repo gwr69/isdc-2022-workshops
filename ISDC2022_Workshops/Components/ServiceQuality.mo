@@ -18,5 +18,9 @@ equation
   annotation(Documentation(info = "<html>
 <p class=\"aside\">This information is part of the ISDC2022 Workshops package.</p>
 <p>Given a comfortable capacity of revenue passenger miles that can be serviced by the available staff, the ratio of the service capacity to the actual revenue passenger miles is clipped to the unit interval, so that a value of one indicates optimal quality, while zero means no service capability whatsoever.</p>
+<h4>See also</h4>
+<p>
+<a href=\"modelica://ISDC2022_Workshops.Components.Staff\">Staff</a>
+</p>
 </html>"), Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {10, 10}), graphics = {Text(visible = true, textColor = {0, 0, 128}, extent = {{-96.456, -12}, {96.456, 12}}, textString = "QUALITY", fontName = "Lato Black", textStyle = {TextStyle.Bold})}));
 end ServiceQuality;

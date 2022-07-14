@@ -33,5 +33,9 @@ equation
   annotation(Documentation(info = "<html>
 <p class=\"aside\">This information is part of the ISDC2022 Workshops package.</p>
 <p>Hiring in People Express is almost entirely driven by the size of the experienced workforce, which needs to interview candidates. PEX prides itself not to fire staff—unless proven incompetent—and will not hire more than needed, which here is checked with regard to a multiple of the current fleet size.</p>
+<h4>See also</h4>
+<p>
+<a href=\"modelica://ISDC2022_Workshops.Components.Staff\">Staff</a>
+</p>
 </html>"), Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {10, 10}), graphics = {Text(visible = true, textColor = {0, 0, 128}, extent = {{-96.456, -12}, {96.456, 12}}, textString = "RECRUITING", fontName = "Lato Black", textStyle = {TextStyle.Bold})}));
 end HiringPolicy;

@@ -9,7 +9,7 @@ model Staff "People express staff"
   parameter BusinessSimulation.Units.Amount AR(displayUnit = "percent") = 0.03 "Fraction of applicants accepted (hiringPolicy.AR)";
   parameter Real FHT = 0.1 "Fraction of experienced staff fully envolved in hiring";
   parameter Real TRI = 0.03 "Experienced staff fully envolved in training per recruit";
-  // components
+protected
   BusinessSimulation.Stocks.MaterialStock experiencedStaff(initialValue = 250) "Experienced personnel" annotation(Placement(visible = true, transformation(origin = {40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.Stocks.DelayN newStaff(hasConstantDelayTime = false) "Freshly recruited personnel" annotation(Placement(visible = true, transformation(origin = {-40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.Flows.Unidirectional.OutflowDynamicStock advancing "New staff becoming experienced" annotation(Placement(visible = true, transformation(origin = {0, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -20,14 +20,15 @@ model Staff "People express staff"
   HiringPolicy hiringPolicy(redeclare replaceable type OutputType = BusinessSimulation.Units.Rate, MCM = MCM, RI = RI, AR = AR) "Setting the rate of hiring" annotation(Placement(visible = true, transformation(origin = {-60, -40}, extent = {{10, 10}, {-10, -10}}, rotation = 0)));
   BusinessSimulation.Converters.Vector.Total totalStaff "Sum of new and experienced staff" annotation(Placement(visible = true, transformation(origin = {-26.713, -25}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.Gain recruiters(c = FHT) "Experienced staff available for hiring" annotation(Placement(visible = true, transformation(origin = {30, -40}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
-  BusinessSimulation.CausalLoop.InfoFlowIndicator lab2 annotation(Placement(visible = true, transformation(origin = {-2.041, 55}, extent = {{-10, -10}, {10, 10}}, rotation = -450)));
-  BusinessSimulation.CausalLoop.InfoFlowIndicator lab3 annotation(Placement(visible = true, transformation(origin = {-23.013, 55}, extent = {{-10, -10}, {10, 10}}, rotation = -270)));
   BusinessSimulation.Converters.Gain hiddenCoaching(c = TRI) "Experienced staff involved in coaching" annotation(Placement(visible = true, transformation(origin = {-7.231, 28.217}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.Vector.Total unavailableStaff "Experienced staff envolved in hiring and training" annotation(Placement(visible = true, transformation(origin = {40, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  BusinessSimulation.CausalLoop.InfoFlowIndicator lab4 annotation(Placement(visible = true, transformation(origin = {20, 10}, extent = {{-10, -10}, {10, 10}}, rotation = -270)));
   BusinessSimulation.Converters.Gap effectiveServiceStaff "Experienced staff effictively serving passengers" annotation(Placement(visible = true, transformation(origin = {80, 30}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   BusinessSimulation.Converters.ConstantConverter serviceProductivity(value = SP) "Revenue passenger miles per service staff per year" annotation(Placement(visible = true, transformation(origin = {110, 90}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   ServiceQuality serviceQuality "Service quality" annotation(Placement(visible = true, transformation(origin = {70, 65}, extent = {{10, 10}, {-10, -10}}, rotation = 0)));
+  // illustration
+  BusinessSimulation.CausalLoop.InfoFlowIndicator lab2 annotation(Placement(visible = true, transformation(origin = {-2.041, 55}, extent = {{-10, -10}, {10, 10}}, rotation = -450)));
+  BusinessSimulation.CausalLoop.InfoFlowIndicator lab3 annotation(Placement(visible = true, transformation(origin = {-23.013, 55}, extent = {{-10, -10}, {10, 10}}, rotation = -270)));
+  BusinessSimulation.CausalLoop.InfoFlowIndicator lab4 annotation(Placement(visible = true, transformation(origin = {20, 10}, extent = {{-10, -10}, {10, 10}}, rotation = -270)));
   BusinessSimulation.CausalLoop.InfoFlowIndicator lab5 annotation(Placement(visible = true, transformation(origin = {30, 68.007}, extent = {{-10, -10}, {10, 10}}, rotation = -540)));
   BusinessSimulation.CausalLoop.InfoFlowIndicator lab6 annotation(Placement(visible = true, transformation(origin = {47.85, 52.195}, extent = {{10, -10}, {-10, 10}}, rotation = 540)));
 equation
@@ -56,6 +57,9 @@ equation
   connect(effectiveServiceStaff.y, serviceQuality.serviceStaff) annotation(Line(visible = true, origin = {90.134, 45}, points = {{-2.134, -15}, {14.866, -15}, {14.866, 15}, {-9.134, 15}}, color = {1, 37, 163}, smooth = Smooth.Bezier));
   annotation(Diagram(coordinateSystem(extent = {{-148.5, -105}, {148.5, 105}}, preserveAspectRatio = true, initialScale = 0.1, grid = {5, 5}), graphics = {Text(visible = true, origin = {-54.511, 98.848}, textColor = {0, 0, 128}, extent = {{-34.511, -3.848}, {34.511, 3.848}}, textString = "planes", fontSize = 12, fontName = "Lato", horizontalAlignment = TextAlignment.Right), Text(visible = true, origin = {54.511, 98.848}, textColor = {0, 0, 128}, extent = {{-34.511, -3.848}, {34.511, 3.848}}, textString = "totalStaff", fontSize = 12, fontName = "Lato", horizontalAlignment = TextAlignment.Left), Text(visible = true, origin = {54.511, 93.848}, textColor = {0, 0, 128}, extent = {{-34.511, -3.848}, {34.511, 3.848}}, textString = "serviceQuality", fontSize = 12, fontName = "Lato", horizontalAlignment = TextAlignment.Left), Text(visible = true, origin = {-54.511, 93.848}, textColor = {0, 0, 128}, extent = {{-34.511, -3.848}, {34.511, 3.848}}, textString = "revenuePassengerMiles", fontSize = 12, fontName = "Lato", horizontalAlignment = TextAlignment.Right)}), Documentation(info = "<html>
 <p class=\"aside\">This information is part of the ISDC2022 Workshops package.</p>
-<p></p>
+<p>PEX has two types of employees in this model: newly hired staff and experienced staff. The latter is also responsible for recruiting, e.g., interviewing candidates. Assuming sufficient numbers of applicants at all times, the growth of staff is completely dependent upon the number of experienced staff (<a href=\"modelica://ISDC2022_Workshops.Components.HiringPolicy\">→<code>hiringPolicy</code></a>). During the simulation period we will make the simplifying assumption that there is no staff turnover as all are excited to be part of this exciting startup.</p>
+<p>
+The effective number of service staff is calculated from the number of experienced staff after deducing those, that are envolved in recruitment and coaching of newly hired personnell. The number of effective service staff and its service productivity are main drivers for <a href=\"modelica://ISDC2022_Workshops.Components.ServiceQuality\">→<code>serviceQuality</code></a>.
+</p>
 </html>"));
 end Staff;

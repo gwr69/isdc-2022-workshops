@@ -3,6 +3,7 @@ within ISDC2022_Workshops.Components;
 model Fleet "People express fleet"
   extends ISDC2022_Workshops.Interfaces.Fleet;
   parameter BusinessSimulation.Units.Rate growthTarget(displayUnit = "1/yr") = 3.17097919837646e-09 "Growth rate envisoned by Don Burr";
+protected
   BusinessSimulation.Stocks.MaterialStock aircraft(initialValue = 3) "Aircraft of norm size in the fleet" annotation(Placement(visible = true, transformation(origin = {0, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.SourcesOrSinks.ExponentialChange growing annotation(Placement(visible = true, transformation(origin = {-40, -30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.ConstantConverter targetGrowth(redeclare replaceable type OutputType = BusinessSimulation.Units.Rate, value = growthTarget) "Envisioned growth" annotation(Placement(visible = true, transformation(origin = {-120, -20}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -14,6 +15,7 @@ model Fleet "People express fleet"
   BusinessSimulation.Converters.DiscreteDelay.Smooth perceivedLoadFactor(delayTime(displayUnit = "mo") = 7884000, init = BusinessSimulation.Types.InitializationOptions.SteadyState) annotation(Placement(visible = true, transformation(origin = {-40, 30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.Lookup.ConcaveLookupPositive adjFactor(y0 = 0, s = 0.2) "Adjustment factor for growth rate" annotation(Placement(visible = true, transformation(origin = {-80, 30}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.Product_2 fracGrowthRate "Fractional growth rate fleet" annotation(Placement(visible = true, transformation(origin = {-80, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  // illustration
   BusinessSimulation.CausalLoop.InfoFlowIndicator lab2 annotation(Placement(visible = true, transformation(origin = {-32.37, 62.633}, extent = {{-10, -10}, {10, 10}}, rotation = -360)));
   BusinessSimulation.CausalLoop.InfoFlowIndicator lab3 annotation(Placement(visible = true, transformation(origin = {8.394, 50}, extent = {{-10, -10}, {10, 10}}, rotation = -270)));
   BusinessSimulation.CausalLoop.InfoFlowIndicator lab4 annotation(Placement(visible = true, transformation(origin = {27.782, 75}, extent = {{-10, -10}, {10, 10}}, rotation = -720)));

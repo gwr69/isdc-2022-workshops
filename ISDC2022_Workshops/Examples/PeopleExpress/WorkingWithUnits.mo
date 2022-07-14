@@ -1,4 +1,4 @@
-within ISDC2022_Workshops.Examples;
+within ISDC2022_Workshops.Examples.PeopleExpress;
 
 model WorkingWithUnits "Best practices to work with units in Modelica models"
   extends BusinessSimulation.Icons.Example;
@@ -38,6 +38,10 @@ Modelica allows us to work with different choices for <code>displayUnit</code> d
 </p>
 <p>
 The ratio <code>opDaysPerYear</code> has a further complication: Dimensionality analysis should quickly convince us that dividing a unit of <em>time</em> by a different unit of <em>time</em> must necessarily result in a <em>dimensionless</em> scalar. Modelica's unit framework will do this for us only, if we explicitly tell it that the nominator has <code>quantity = \"Time\"</code>.
+</p>
+<h4>See also</h4>
+<p>
+<a href=\"modelica://ISDC2022_Workshops.Components.Fleet#diagram\">Components.Fleet#diagram</a>
 </p>
 <html>"), Diagram(coordinateSystem(extent = {{-148.5, -105}, {148.5, 105}}, preserveAspectRatio = true, initialScale = 0.1, grid = {5, 5}), graphics = {Text(visible = true, origin = {55, 64}, textColor = {255, 0, 0}, extent = {{-18.018, -6}, {18.018, 6}}, textString = "Rates", fontName = "Lato"), Line(visible = true, origin = {85.708, 59.92}, points = {{-12.591, 2.275}, {12.591, -2.275}}, color = {255, 0, 0}, arrow = {Arrow.None, Arrow.Filled}), Line(visible = true, origin = {63.974, 42.475}, points = {{-6.026, 14.259}, {6.026, -14.259}}, color = {255, 0, 0}, arrow = {Arrow.None, Arrow.Filled}), Line(visible = true, origin = {88.135, 43.974}, points = {{-20.176, 13.974}, {20.176, -13.974}}, color = {255, 0, 0}, arrow = {Arrow.None, Arrow.Filled}), Text(visible = true, origin = {-71.323, 20}, textColor = {255, 0, 0}, extent = {{-68.677, -6}, {68.677, 6}}, textString = "Work with displayUnit", fontName = "Lato", horizontalAlignment = TextAlignment.Left), Text(visible = true, origin = {-33.266, 6}, textColor = {255, 0, 0}, extent = {{-106.734, -6}, {106.734, 6}}, textString = "and keep rates internally consistant at [1/s]", fontName = "Lato", horizontalAlignment = TextAlignment.Left), Text(visible = true, origin = {30, -66}, textColor = {255, 0, 0}, extent = {{-110, -6}, {110, 6}}, textString = "Time per Time should give a dimensionless scalar", fontName = "Lato", horizontalAlignment = TextAlignment.Right), Line(visible = true, origin = {120, -25}, points = {{-0, -35}, {0, 35}}, color = {255, 0, 0}, arrow = {Arrow.None, Arrow.Filled}), Polygon(visible = true, origin = {-1.709, 76.877}, rotation = -12.49, lineColor = {255, 0, 0}, fillColor = {255, 0, 0}, fillPattern = FillPattern.Solid, points = {{-8.001, 3.447}, {-20.034, -19.627}, {-9.533, -15.693}, {-14.718, -30.789}, {-0.975, -11.981}, {-12.073, -13.579}, {-4.041, 3.027}})}), experiment(StopTime = 315360000, __Wolfram_DisplayTimeUnit = "yr"));
 end WorkingWithUnits;
