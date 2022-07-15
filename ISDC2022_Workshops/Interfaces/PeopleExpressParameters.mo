@@ -9,8 +9,8 @@ encapsulated partial model PeopleExpressParameters "Model parameters"
   parameter Real maxCapacityMultiple(unit = "staff/plane") = 80 "Maximum capapcity multiplier (MCM), i.e., max #staff per plane" annotation(Dialog(tab = "Staff Parameters", group = "Recruitment"));
   parameter Rate recruitingIntensity(displayUnit = "1/yr") = 9.51293759512938e-07 "Recruiting intensity (RI), i.e., job interviews per recruiter per year" annotation(Dialog(tab = "Staff Parameters", group = "Recruitment"));
   parameter Amount acceptanceRatio(displayUnit = "percent") = 0.03 "Fraction of applicants accepted (AR)" annotation(Dialog(tab = "Staff Parameters", group = "Recruitment"));
-  parameter Real fractionEnvolvedHiring = 0.15 "Fraction of experienced staff fully envolved in hiring (FHI)" annotation(Dialog(tab = "Staff Parameters", group = "Recruitment"));
-  parameter Real trainingRatio = 0.03 "Experienced staff fully envolved in training per recruit (EPR)" annotation(Dialog(tab = "Staff Parameters", group = "Recruitment"));
+  parameter Real fractionInvolvedHiring = 0.15 "Fraction of experienced staff fully involved in hiring (FHI)" annotation(Dialog(tab = "Staff Parameters", group = "Recruitment"));
+  parameter Real trainingRatio = 0.03 "Experienced staff fully involved in training per recruit (EPR)" annotation(Dialog(tab = "Staff Parameters", group = "Recruitment"));
   // staff parameters: service quality
   parameter AmountRate serviceProductivity(displayUnit = "million/yr") = 0.0475646879756469 "Service productivity (SP), i.e., revenue passenger miles per service staff and year" annotation(Dialog(tab = "Staff Parameters", group = "Service Quality"));
   // staff parameters: stocks

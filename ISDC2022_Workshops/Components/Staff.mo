@@ -9,8 +9,8 @@ model Staff "People express staff"
   parameter Real MCM(unit = "people") = 60 "Maximum capapcity multiplier, i.e., max staff per plane (hiringPolicy.MCM)";
   parameter BusinessSimulation.Units.Rate RI(displayUnit = "1/yr") = 9.51293759512938e-07 "Recruiting intensity, i.e., job interviews per recruiter per year (hiringPolicy.RI)";
   parameter BusinessSimulation.Units.Amount AR(displayUnit = "percent") = 0.03 "Fraction of applicants accepted (hiringPolicy.AR)";
-  parameter Real FHI = 0.1 "Fraction of experienced staff fully envolved in hiring";
-  parameter Real EPR = 0.03 "Experienced staff fully envolved in training per recruit";
+  parameter Real FHI = 0.1 "Fraction of experienced staff fully involved in hiring";
+  parameter Real EPR = 0.03 "Experienced staff fully involved in training per recruit";
 protected
   BusinessSimulation.Stocks.MaterialStock experiencedStaff(initialValue = initES) "Experienced personnel" annotation(Placement(visible = true, transformation(origin = {40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.Stocks.DelayN newStaff(hasConstantDelayTime = false, initialValue = initNS) "Freshly recruited personnel" annotation(Placement(visible = true, transformation(origin = {-40, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -23,7 +23,7 @@ protected
   BusinessSimulation.Converters.Vector.Total totalStaff "Sum of new and experienced staff" annotation(Placement(visible = true, transformation(origin = {-26.713, -25}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.Gain recruiters(c = FHI) "Experienced staff available for hiring" annotation(Placement(visible = true, transformation(origin = {30, -40}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.Gain hiddenCoaching(c = EPR) "Experienced staff involved in coaching" annotation(Placement(visible = true, transformation(origin = {-7.231, 28.217}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  BusinessSimulation.Converters.Vector.Total unavailableStaff "Experienced staff envolved in hiring and training" annotation(Placement(visible = true, transformation(origin = {40, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  BusinessSimulation.Converters.Vector.Total unavailableStaff "Experienced staff involved in hiring and training" annotation(Placement(visible = true, transformation(origin = {40, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.Gap effectiveServiceStaff "Experienced staff effictively serving passengers" annotation(Placement(visible = true, transformation(origin = {80, 30}, extent = {{-10, 10}, {10, -10}}, rotation = 0)));
   BusinessSimulation.Converters.ConstantConverter serviceProductivity(value = SP) "Revenue passenger miles per service staff per year" annotation(Placement(visible = true, transformation(origin = {110, 90}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   ServiceQuality serviceQuality "Service quality" annotation(Placement(visible = true, transformation(origin = {70, 65}, extent = {{10, 10}, {-10, -10}}, rotation = 0)));
@@ -61,7 +61,7 @@ equation
 <p class=\"aside\">This information is part of the ISDC2022 Workshops package.</p>
 <p>PEX has two types of employees in this model: newly hired staff and experienced staff. The latter is also responsible for recruiting, e.g., interviewing candidates. Assuming sufficient numbers of applicants at all times, the growth of staff is completely dependent upon the number of experienced staff (<a href=\"modelica://ISDC2022_Workshops.Components.HiringPolicy\">→<code>hiringPolicy</code></a>). During the simulation period we will make the simplifying assumption that there is no staff turnover as all are excited to be part of this exciting startup.</p>
 <p>
-The effective number of service staff is calculated from the number of experienced staff after deducing those, that are envolved in recruitment and coaching of newly hired personnell. The number of effective service staff and its service productivity are main drivers for <a href=\"modelica://ISDC2022_Workshops.Components.ServiceQuality\">→<code>serviceQuality</code></a>.
+The effective number of service staff is calculated from the number of experienced staff after deducing those, that are involved in recruitment and coaching of newly hired personnell. The number of effective service staff and its service productivity are main drivers for <a href=\"modelica://ISDC2022_Workshops.Components.ServiceQuality\">→<code>serviceQuality</code></a>.
 </p>
 </html>"));
 end Staff;
