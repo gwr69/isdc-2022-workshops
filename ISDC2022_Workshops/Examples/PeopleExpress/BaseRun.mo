@@ -1,8 +1,8 @@
 within ISDC2022_Workshops.Examples.PeopleExpress;
 
 model BaseRun "Basic model for PEX dynamics"
-  extends ISDC2022_Workshops.Interfaces.PeopleExpressSimulationRun;
-  extends ISDC2022_Workshops.Interfaces.PeopleExpressParameters;
+  extends Interfaces.PeopleExpressSimulationRun;
+  extends Interfaces.PeopleExpressParameters;
   extends BusinessSimulation.Icons.SimulationModel;
   Interfaces.IO dataExchange "Hub for exchanging information between subsystems" annotation(Placement(visible = true, transformation(origin = {-3.037, 82.915}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {0, 100}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Components.Fleet fleet(growthTarget = growthTarget, initAC = initialAircraft) "PEX fleet subsystem" annotation(Placement(visible = true, transformation(origin = {-92.639, 65}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));

@@ -1,7 +1,7 @@
 within ISDC2022_Workshops.Components;
 
 model Fleet "People express fleet"
-  extends ISDC2022_Workshops.Interfaces.Fleet;
+  extends Interfaces.Fleet;
   parameter BusinessSimulation.Units.Rate growthTarget(displayUnit = "1/yr") = 3.17097919837646e-09 "Growth rate envisoned by Don Burr";
   parameter BusinessSimulation.Units.TangibleAssets initAC = 3 "Initial number of aircraft";
 protected

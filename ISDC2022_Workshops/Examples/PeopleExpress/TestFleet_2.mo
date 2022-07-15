@@ -1,7 +1,7 @@
 within ISDC2022_Workshops.Examples.PeopleExpress;
 
 model TestFleet_2 "No passengers means no growth"
-  extends .Interfaces.PeopleExpressSimulationRun;
+  extends Interfaces.PeopleExpressSimulationRun;
   extends BusinessSimulation.Icons.Example;
   Components.Fleet fleet "The fleet subsystem" annotation(Placement(visible = true, transformation(origin = {0, -10}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Interfaces.IO dataExchange "Data bus" annotation(Placement(visible = true, transformation(origin = {0, 40}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {84.449, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
