@@ -2,6 +2,8 @@ within ISDC2022_Workshops.Components;
 
 model Passengers "Passenger and market subsystem"
   extends Interfaces.Passengers;
+  parameter Boolean hasExogenousPrice = false "= true, if Peoples' fare is given exogenously" annotation(Evaluate = true, Dialog(group = "Structural Parameters"));
+  parameter Boolean hasExogenousTravelFrequency = false "= true, if travel frequency is to be an exogenous input" annotation(Evaluate = true, Dialog(group = "Structural Parameters"));
   parameter BusinessSimulation.Units.Amount initPP(displayUnit = "thousand") = 180e3 "Initial number of potential passengers";
   parameter BusinessSimulation.Units.Time TTP(displayUnit = "yr") = 31536000 "Time to perceive service quality";
   parameter BusinessSimulation.Units.Time ATP(displayUnit = "yr") = 126144000 "Time to adjust costs and fare to peoples";
@@ -19,17 +21,19 @@ model Passengers "Passenger and market subsystem"
   BusinessSimulation.Converters.DiscreteDelay.Smooth serviceReputation(hasConstantDelayTime = false) "Service quality perceived by passengers" annotation(Placement(visible = true, transformation(origin = {20, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.ConstantConverter perceptionTime(value = TTP, redeclare replaceable type OutputType = BusinessSimulation.Units.Time) "Time constant for perception delay" annotation(Placement(visible = true, transformation(origin = {50, 80}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.Lookup.JanoschekNegative churnRate(convertOutput = true, outputIsRate = true, timeBaseTableOut = BusinessSimulation.Types.TimeBases.years, lowerBound = 0, upperBound = 1, x_ref = 0.5, y_ref = 0.5, growthRate = 6) "Rate of losing passengers to competitors" annotation(Placement(visible = true, transformation(origin = {50, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  BusinessSimulation.CausalLoop.InputControl peoplesFare(initialInput = IPF, finalInput = FPF, startTime(displayUnit = "yr") = PPST, duration(displayUnit = "yr") = PPD) "Setting the prive per passenger mile" annotation(Placement(visible = true, transformation(origin = {-122.946, 55}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  BusinessSimulation.CausalLoop.InputControl peoplesFare(initialInput = IPF, finalInput = FPF, startTime(displayUnit = "yr") = PPST, duration(displayUnit = "yr") = PPD) if not hasExogenousPrice "Setting the price per passenger mile" annotation(Placement(visible = true, transformation(origin = {-122.946, 55}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.DiscreteDelay.Smooth competitorFare(hasConstantDelayTime = false, initialValue = ICF) "Average fare for the competition" annotation(Placement(visible = true, transformation(origin = {-97.946, 55}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.ConstantConverterTime adjustmentTimePrice(value(displayUnit = "yr") = ATP) "Time constant for adapting to peoples express fare" annotation(Placement(visible = true, transformation(origin = {-80, 80}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.Division relativeFare "Ratio of Peoples' fare to competitors'fare, i.e., less than one is advantageous" annotation(Placement(visible = true, transformation(origin = {-65, 47.73}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.Lookup.JanoschekNegative conversionRate(redeclare replaceable type OutputType = BusinessSimulation.Units.Rate, upperBound = 3, lowerBound = -0.2, growthRate = 3, x_ref = 0.4, y_ref = 1.8, convertOutput = true, outputIsRate = true, timeBaseTableOut = BusinessSimulation.Types.TimeBases.years) "A nonlinear function of the relative fare" annotation(Placement(visible = true, transformation(origin = {-43.102, 26.603}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.ConstantConverter avgDistanceTraveled(value = MPF) "Miles traveled per passenger and flight" annotation(Placement(visible = true, transformation(origin = {-40, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  BusinessSimulation.Converters.ConstantConverter travelFrequency(value = FPY, redeclare replaceable type OutputType = BusinessSimulation.Units.Rate) "Flights per passenger and year" annotation(Placement(visible = true, transformation(origin = {-40, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  BusinessSimulation.Converters.ConstantConverter travelFrequency(value = FPY, redeclare replaceable type OutputType = BusinessSimulation.Units.Rate) if not hasExogenousTravelFrequency "Flights per passenger and year" annotation(Placement(visible = true, transformation(origin = {-40, -80}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   BusinessSimulation.Converters.Product_3 potentialPassengerMiles(redeclare replaceable type OutputType = BusinessSimulation.Units.Rate) "Potential demand size per year" annotation(Placement(visible = true, transformation(origin = {40, -60}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   // illustration
   BusinessSimulation.CausalLoop.InfoFlowIndicator lab2 annotation(Placement(visible = true, transformation(origin = {-35, 52.192}, extent = {{-10, -10}, {10, 10}}, rotation = -360)));
   BusinessSimulation.CausalLoop.InfoFlowIndicator lab3 annotation(Placement(visible = true, transformation(origin = {2.318, 36.51}, extent = {{-10, -10}, {10, 10}}, rotation = -270)));
+  BusinessSimulation.Converters.PassThrough exogenousTravelFrequency if hasExogenousTravelFrequency "Flights per passenger per year" annotation(Placement(visible = true, transformation(origin = {-70, -65}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  BusinessSimulation.Converters.PassThrough exogenousPeoplesFare if hasExogenousPrice "USD per RPM" annotation(Placement(visible = true, transformation(origin = {-130, 30}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(winning.massPort, potentialPassengers.inflow) annotation(Line(visible = true, origin = {-30, 0}, points = {{-20, 0}, {20, 0}}, color = {128, 0, 128}));
   connect(potentialPassengers.outflow, losing.massPort) annotation(Line(visible = true, origin = {30, 0}, points = {{-20, 0}, {20, 0}}, color = {128, 0, 128}));
@@ -49,6 +53,11 @@ equation
   connect(potentialPassengers.y1, potentialPassengerMiles.u1) annotation(Line(visible = true, origin = {19.004, -30}, points = {{-8.504, 25}, {0.996, 25}, {0.996, -25}, {12.996, -25}}, color = {1, 37, 163}, smooth = Smooth.Bezier));
   connect(potentialPassengerMiles.y, io.potentialPassengerMiles) "output potential passenger miles" annotation(Line(visible = true, origin = {49.6, 5}, points = {{-1.6, -65}, {50.4, -65}, {50.4, 15}, {-49.6, 15}, {-49.6, 100}}, color = {1, 37, 163}, smooth = Smooth.Bezier));
   connect(potentialPassengers.y2, io.potentialPassengers) "output potential passengers" annotation(Line(visible = true, origin = {-10.1, 27.31}, points = {{-0.4, -32.31}, {-9.9, -32.31}, {-9.9, -9.128}, {10.1, -9.128}, {10.1, 77.69}}, color = {1, 37, 163}, smooth = Smooth.Bezier));
+  connect(exogenousTravelFrequency.y, potentialPassengerMiles.u3) annotation(Line(visible = true, origin = {-15, -65}, points = {{-47, 0}, {47, 0}}, color = {1, 37, 163}));
+  connect(exogenousTravelFrequency.u, io.travelFrequency) "input travel frequency (conditional)" annotation(Line(visible = true, origin = {-62.485, 20}, points = {{-15.515, -85}, {-80.65, -85}, {-80.65, 85}, {62.485, 85}}, color = {0, 0, 128}, smooth = Smooth.Bezier));
+  connect(exogenousPeoplesFare.y, competitorFare.u) annotation(Line(visible = true, origin = {-114.827, 42.5}, points = {{-7.173, -12.5}, {-0.173, -12.5}, {-0.173, 12.5}, {7.519, 12.5}}, color = {1, 37, 163}, smooth = Smooth.Bezier));
+  connect(exogenousPeoplesFare.y, relativeFare.u1) annotation(Line(visible = true, origin = {-89.163, 41.365}, points = {{-32.837, -11.365}, {9.163, -11.365}, {9.163, 11.365}, {16.163, 11.365}}, color = {1, 37, 163}, smooth = Smooth.Bezier));
+  connect(exogenousPeoplesFare.u, io.peoplesFare) "input peoples fare (conditional)" annotation(Line(visible = true, origin = {-107.611, 67.5}, points = {{-30.389, -37.5}, {-37.389, -37.5}, {-37.389, 22.5}, {107.611, 22.5}, {107.611, 37.5}}, color = {0, 0, 128}, smooth = Smooth.Bezier));
   annotation(Documentation(info = "<html>
 <p class=\"aside\">This information is part of the ISDC2022 Workshops package.</p>
 <p>

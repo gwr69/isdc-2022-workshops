@@ -1,7 +1,11 @@
 within ISDC2022_Workshops.Interfaces;
 
 encapsulated partial model PeopleExpressParameters "Model parameters"
+  import BusinessSimulation.Interfaces.Connectors;
   import BusinessSimulation.Units.{Rate,AmountRate,Time,Fraction,Amount};
+  // structural parameters
+  parameter Boolean hasExogenousPrice = false "= true, if Peoples' fare is given exogenously" annotation(Evaluate = true, Dialog(group = "Structural Parameters"));
+  parameter Boolean hasExogenousTravelFrequency = false "= true, if travel frequency is to be an exogenous input" annotation(Evaluate = true, Dialog(group = "Structural Parameters"));
   // fleet parameters
   parameter Rate growthTarget(displayUnit = "1/yr") = 2.21968543886352e-08 "Growth rate envisoned by Don Burr" annotation(Dialog(tab = "Fleet Parameters"));
   final parameter Real initialAircraft = 3 "Initial number of aircraft (initAC)" annotation(Dialog(enable = false, tab = "Fleet Parameters"));
@@ -18,14 +22,16 @@ encapsulated partial model PeopleExpressParameters "Model parameters"
   parameter Real initialExperiencedStaff = 200 " Initial number of experienced staff (initES)" annotation(Dialog(enable = false, tab = "Staff Parameters", group = "Initial Values Stocks"));
   // passengers parameters
   parameter Real initialFareCompetition(unit = "USD/RPM") = 0.25 "Initial fare for competition (ICF)" annotation(Dialog(tab = "PAX Parameters", group = "Winning Passengers"));
-  parameter Real initialPeoplesFare(unit = "USD/RPM") = 0.09 "Initial peoples' fare (IPF)" annotation(Dialog(tab = "PAX Parameters", group = "Winning Passengers"));
-  parameter Real finalPeoplesFare(unit = "USD/RPM") = 0.09 "Final peoples' fare (FPF)" annotation(Dialog(tab = "PAX Parameters", group = "Winning Passengers"));
-  parameter Time pricePolicyStartTime(displayUnit = "yr") = 62472816000 "Start time for ramping up or down fares (PPST)" annotation(Dialog(tab = "PAX Parameters", group = "Winning Passengers"));
-  parameter Time pricePolicyDuration(displayUnit = "yr") = 0 "Duration of price adaptation (PPD)" annotation(Dialog(tab = "PAX Parameters", group = "Winning Passengers"));
+  parameter Real initialPeoplesFare(unit = "USD/RPM") = 0.09 "Initial peoples' fare (IPF)" annotation(Dialog(enable = not hasExogenousPrice, tab = "PAX Parameters", group = "Winning Passengers"));
+  parameter Real finalPeoplesFare(unit = "USD/RPM") = 0.09 "Final peoples' fare (FPF)" annotation(Dialog(enable = not hasExogenousPrice, tab = "PAX Parameters", group = "Winning Passengers"));
+  parameter Time pricePolicyStartTime(displayUnit = "yr") = 62472816000 "Start time for ramping up or down fares (PPST)" annotation(Dialog(enable = not hasExogenousPrice, tab = "PAX Parameters", group = "Winning Passengers"));
+  parameter Time pricePolicyDuration(displayUnit = "yr") = 0 "Duration of price adaptation (PPD)" annotation(Dialog(enable = not hasExogenousPrice, tab = "PAX Parameters", group = "Winning Passengers"));
   parameter Time adjustmentTimePrice(displayUnit = "yr") = 126144000 "Time to adjust costs and fare to peoples (ATP)" annotation(Dialog(tab = "PAX Parameters", group = "Winning Passengers"));
   parameter Time timeToPerceiveServiceQuality(displayUnit = "yr") = 31536000 "Time to perceive service quality (TTP)" annotation(Dialog(tab = "PAX Parameters", group = "Losing Passengers"));
   parameter Real milesPerFlight(unit = "miles") = 800 "Average distance travelled per passenger and flight (MPF)" annotation(Dialog(tab = "PAX Parameters", group = "Utilization"));
-  parameter Rate flightsPerYear(displayUnit = "1/yr") = 1.26839167935058e-07 "Average number of flights per passenger and year (FPY)" annotation(Dialog(tab = "PAX Parameters", group = "Utilization"));
+  parameter Rate flightsPerYear(displayUnit = "1/yr") = 1.26839167935058e-07 "Average number of flights per passenger and year (FPY)" annotation(Dialog(enable = not hasExogenousTravelFrequency, tab = "PAX Parameters", group = "Utilization"));
   parameter Amount initialPotentialPassengers(displayUnit = "thousand") = 180e3 "Initial number of potential passengers (initPP)" annotation(Dialog(enable = false, tab = "PAX Parameters", group = "Initial Value Stocks"));
-  annotation(experiment(StartTime = 62472816000, StopTime = 62693568000, __Wolfram_DisplayTimeUnit = "yr"), Diagram(coordinateSystem(extent = {{-150, -90}, {150, 90}}, preserveAspectRatio = true, initialScale = 0.1, grid = {5, 5})), Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {10, 10}), graphics = {Text(visible = true, textColor = {64, 64, 64}, extent = {{-150, 110}, {150, 150}}, textString = "%name"), Rectangle(visible = true, fillColor = {255, 255, 255}, pattern = LinePattern.None, extent = {{-100, -100}, {100, 100}})}));
+  Connectors.RealInput u_peoplesFare if hasExogenousPrice "USD per revenue passenger mile" annotation(Placement(visible = true, transformation(origin = {-145, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {-50, 100}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+  Connectors.RealInput u_travelFrequency if hasExogenousTravelFrequency "Flights per passenger per year" annotation(Placement(visible = true, transformation(origin = {-145, 40}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {50, 100}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
+  annotation(experiment(StartTime = 62472816000, StopTime = 62693568000, __Wolfram_DisplayTimeUnit = "yr"), Diagram(coordinateSystem(extent = {{-150, -90}, {150, 90}}, preserveAspectRatio = true, initialScale = 0.1, grid = {5, 5})), Icon(coordinateSystem(extent = {{-100, -100}, {100, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {10, 10}), graphics = {Rectangle(visible = true, fillColor = {255, 255, 255}, pattern = LinePattern.None, extent = {{-100, -100}, {100, 100}})}));
 end PeopleExpressParameters;

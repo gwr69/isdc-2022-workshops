@@ -2,7 +2,7 @@ within ISDC2022_Workshops.Examples.PeopleExpress;
 
 model BaseRun "Basic model for PEX dynamics"
   extends Interfaces.PeopleExpressSimulationRun;
-  extends Interfaces.PeopleExpressParameters;
+  extends Interfaces.PeopleExpressParameters(hasExogenousPrice = false, hasExogenousTravelFrequency = false);
   extends BusinessSimulation.Icons.SimulationModel;
   Interfaces.IO dataExchange "Hub for exchanging information between subsystems" annotation(Placement(visible = true, transformation(origin = {-3.037, 82.915}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {0, 100}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   Components.Fleet fleet(growthTarget = growthTarget, initAC = initialAircraft) "PEX fleet subsystem" annotation(Placement(visible = true, transformation(origin = {-92.639, 65}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -12,6 +12,8 @@ equation
   connect(dataExchange, staff.io) annotation(Line(visible = true, origin = {-3.037, 42.976}, points = {{0, 39.939}, {0, -39.939}}, color = {0, 0, 128}));
   connect(dataExchange, passengers.io) annotation(Line(visible = true, origin = {62.321, 80.911}, points = {{-65.358, 2.004}, {32.679, 2.004}, {32.679, -4.009}}, color = {0, 0, 128}));
   connect(dataExchange, fleet.io) annotation(Line(visible = true, origin = {-62.772, 80.277}, points = {{59.735, 2.638}, {-29.867, 2.638}, {-29.867, -5.277}}, color = {0, 0, 128}));
+  connect(u_peoplesFare, dataExchange.peoplesFare) annotation(Line(visible = true, origin = {-102.585, 71.457}, points = {{-42.415, -11.458}, {-25.842, -11.458}, {-25.842, 11.458}, {99.548, 11.458}}, color = {0, 0, 128}));
+  connect(u_travelFrequency, dataExchange.travelFrequency) annotation(Line(visible = true, origin = {-102.663, 61.458}, points = {{-42.337, -21.458}, {-25.764, -21.458}, {-25.764, 21.457}, {99.626, 21.457}}, color = {0, 0, 128}));
   annotation(Documentation(info = "<html>
 <p class=\"aside\">This information is part of the ISDC2022 Workshops package.</p>
 <p>
