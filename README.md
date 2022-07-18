@@ -14,7 +14,7 @@ The participants will then expand their simple model by adding pre-built compone
 Participants will use Wolfram System Modeler for this workshop. Wolfram System Modeler is an easy-to-use, next-generation modeling and simulation environment for cyber-physical systems. It is based on the Modelica language which is an open standard language. The participants will receive a 6-month trial so that they can create and test models at their leisure.
 Participants should bring a laptop.
 
-[/ISDC2022_Workshops/Resources/PDF/ISDC2022_WS231.pdf](Workshop Presentation)
+[Workshop Presentation](/ISDC2022_Workshops/Resources/PDF/ISDC2022_WS231.pdf)
 
 ## Workshop #232: 
 
@@ -31,7 +31,7 @@ Finally, they will learn to create custom dashboards. They will learn how to cre
 They will then deploy the dashboard in the free Wolfram cloud. Through this process, they learn how to collaborate with others and learn how to publish the dashboard on the web for public access.
 Participants should bring a laptop.
 
-[/ISDC2022_Workshops/Resources/Notebooks/ISDC2022_Workshop232.nb]
+[Workshop Notebook](/ISDC2022_Workshops/Resources/Notebooks/ISDC2022_Workshop232.nb)
 
 ## License
 Copyright © 2022 Guido Wolf Reichert 
