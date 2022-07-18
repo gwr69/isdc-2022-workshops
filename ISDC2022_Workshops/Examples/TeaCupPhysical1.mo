@@ -32,5 +32,5 @@ In this component-based version of the <code>TeaCup</code> model we are using co
 <a href=\"modelica://ISDC2022_Workshops.Examples.TeaCupTextual\">TeaCupTextual</a>,
 <a href=\"modelica://ISDC2022_Workshops.Examples.TeaCupComponentBased5\">TeaCupComponentBased5</a>
 </p>
-</html>"), Diagram(coordinateSystem(extent = {{-148.5, -105}, {148.5, 105}}, preserveAspectRatio = true, initialScale = 0.1, grid = {5, 5})));
+</html>", figures = {Figure(title = "Temperature", identifier = "temp", preferred = true, plots = {Plot(curves = {Curve(y = tempCup.T)})}, caption = "The temperature in the cup.")}), Diagram(coordinateSystem(extent = {{-148.5, -105}, {148.5, 105}}, preserveAspectRatio = true, initialScale = 0.1, grid = {5, 5})));
 end TeaCupPhysical1;

@@ -71,5 +71,5 @@ The model uses <em>structural parameters</em> to switch on/off model components,
 <a href=\"modelica://ISDC2022_Workshops.Examples.TeaCupTextual\">TeaCupTextual</a>,
 <a href=\"modelica://ISDC2022_Workshops.Examples.TeaCupComponentBased4\">TeaCupComponentBased4</a>
 </p>
-</html>"), Diagram(coordinateSystem(extent = {{-148.5, -105}, {148.5, 105}}, preserveAspectRatio = true, initialScale = 0.1, grid = {5, 5})));
+</html>", figures = {Figure(title = "tempCup.T", identifier = "temp", preferred = true, plots = {Plot(curves = {Curve(y = tempCup.T)})}, caption = "The temperature in the cup.")}), Diagram(coordinateSystem(extent = {{-148.5, -105}, {148.5, 105}}, preserveAspectRatio = true, initialScale = 0.1, grid = {5, 5})));
 end TeaCupPhysical2;
