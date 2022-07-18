@@ -16,7 +16,7 @@ Participants should bring a laptop.
 
 [Workshop Presentation](/ISDC2022_Workshops/Resources/PDF/ISDC2022_WS231.pdf)
 
-## Workshop #232: 
+## Workshop #232: Data Wrangling, Model Testing and Model Analysis for Object-Oriented Models in the Wolfram Language
 
 This workshop is designed to follow the workshop on "Introduction to object-oriented hierarchical modeling using pre-built components". The participants will learn to do custom analysis on their models using the Wolfram Language. 
  
