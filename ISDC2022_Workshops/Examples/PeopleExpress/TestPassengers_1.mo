@@ -1,6 +1,6 @@
 within ISDC2022_Workshops.Examples.PeopleExpress;
 
-model Test_Passengers1 "Service quality = 1 => neglectible churnRate (<< 0.001 p.a.)"
+model TestPassengers_1 "Service quality = 1 => neglectible churnRate (<< 0.001 p.a.)"
   extends Interfaces.PeopleExpressSimulationRun;
   extends BusinessSimulation.Icons.Example;
   Interfaces.IO dataExchange "Data bus" annotation(Placement(visible = true, transformation(origin = {0, 40}, extent = {{-20, -20}, {20, 20}}, rotation = 0), iconTransformation(origin = {84.449, 0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
@@ -13,4 +13,4 @@ equation
 <p class=\"aside\">This information is part of the ISDC2022 Workshops package.</p>
 <p>Test example.</p>
 </html>"));
-end Test_Passengers1;
+end TestPassengers_1;
