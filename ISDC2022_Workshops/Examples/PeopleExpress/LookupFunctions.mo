@@ -2,7 +2,7 @@ within ISDC2022_Workshops.Examples.PeopleExpress;
 
 model LookupFunctions "Sandbox for lookup-functions"
   extends BusinessSimulation.Icons.Example;
-  ModelOutput modelOutput "The main model output" annotation(Placement(visible = true, transformation(origin = {120, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {80.808, -6.712}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  ModelOutput modelOutput "The main model output" annotation(Placement(visible = true, transformation(origin = {120, -40}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {80, -0}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   parameter Real slope1To50(min = 1, max = 50) = 2 "Slope parameter (general)";
   parameter Real slope(min = 0) = slope1To50 "Determines the gradient of the curve (Janoschek and S-Shaped)";
   parameter Real slopeUpTo1(min = 0, max = 1) = 0.5 "Slope parameter (0< slope <= 1) (concaveLookupPosisitve)";
